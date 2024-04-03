@@ -37,7 +37,9 @@ There are 5 jumper caps on the Main Board, each jumper cap corresponds to a func
             pironman -rp 21
 
 
-* **Enable Fan**: The fan is always spinning when this jumper cap is unplugged. You can unplug the fan wires or remove the fan if you don't need it.
+* **Enable Fan**: Insert the jumper to enable fan control; remove the jumper to turn off the fan.
+
+
 * **Enable IR Receiver**: If you pull out this jumper cap, the IR Receiver will not work.
 
 
