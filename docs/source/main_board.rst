@@ -34,7 +34,9 @@ Auf der Hauptplatine befinden sich 5 Jumper-Kappen. Jede Jumper-Kappe entspricht
 
             pironman -rp 21
 
-* **Lüfter aktivieren**: Der Lüfter dreht sich immer, wenn diese Jumper-Kappe abgezogen ist. Wenn Sie ihn nicht benötigen, können Sie die Lüfterkabel abziehen oder den Lüfter entfernen.
+* **Lüfter aktivieren**: Stecken Sie den Jumper ein, um die Lüftersteuerung zu aktivieren; ziehen Sie den Jumper heraus, um den Lüfter auszuschalten.
+
+
 * **IR-Empfänger aktivieren**: Wenn Sie diese Jumper-Kappe herausziehen, funktioniert der IR-Empfänger nicht.
 
 **Speicherung des Stromausfalls**
