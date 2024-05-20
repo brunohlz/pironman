@@ -121,7 +121,7 @@ rst_epilog = """
 
 .. |link_pironman_v1| raw:: html
 
-    <a href="https://docs.sunfounder.com/projects/pironman/en/latest/" target="_blank">Pironman V1.0</a>
+    <a href="https://docs.sunfounder.com/projects/pironman-v1/en/latest/" target="_blank">Pironman V1.0</a>
 
 .. |link_pironman_v2| raw:: html
 
