@@ -88,6 +88,10 @@ gettext_compact = False # Support for generating the contents of the folders ins
 
 rst_epilog = """
 
+.. |link_sf_facebook| raw:: html
+
+    <a href="https://bit.ly/4dLbMIM" target="_blank">ここ</a>
+
 .. |link_german_tutorials| raw:: html
 
     <a href="https://docs.sunfounder.com/projects/pironman-v2/de/latest/" target="_blank">Deutsch Online-Kurs</a>
