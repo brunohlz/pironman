@@ -4,7 +4,7 @@ import time
 import threading
 import signal
 
-from gpiozero import Button
+from gpiozero import InputDevice
 from gpiozero import DigitalOutputDevice as Fan
 
 from configparser import ConfigParser
@@ -201,10 +201,29 @@ except Exception as e:
     oled_stat = False
 
 
-# fan io & powerkey io init
+# fan io  init
 # =================================================================
-fan = Fan(fan_pin)
-power_key = Button(power_key_pin)
+fan_ok = False
+try:
+    fan = Fan(fan_pin)
+    fan_ok = True
+    log('fan init success')
+except Exception as e:
+    fan_ok = False
+    log(f'fan init failed:\n {e}')
+
+
+# powerkey io init
+# =================================================================
+power_key_ok = False
+
+try:
+    power_key = InputDevice(power_key_pin, pull_up=False)
+    power_key_ok = True
+    log('power_key init success')
+except Exception as e:
+    power_key_ok = False
+    log(f'power_key init failed:\n {e}')
 
 
 # get IP
@@ -267,7 +286,7 @@ signal.signal(signal.SIGINT, signal_handler)
 # =================================================================
 def main():
     global fan_temp, power_key_pin, screen_off_time, rgb_color, rgb_pin
-    global oled_stat
+    global oled_stat, screen_always_on
 
     ip = 'DISCONNECT'
     last_ip = 'DISCONNECT'
@@ -294,26 +313,27 @@ def main():
         CPU_temp_F = float(CPU_temp_C * 1.8 + 32) # fahrenheit
 
         # ---- fan control ----
-        if temp_unit == 'C':
-            if CPU_temp_C > fan_temp:
-                fan.on()
-            elif CPU_temp_C < fan_temp - temp_lower_set:
-                fan.off()
-        elif temp_unit == 'F':
-            if CPU_temp_F > fan_temp:
-                fan.on()
-            elif CPU_temp_F < fan_temp - temp_lower_set*1.8:
-                fan.off()
-        else:
-            log('temp_unit error, use defalut value: 50\'C')
-            if CPU_temp_C > 50:
-                fan.on()
-            elif CPU_temp_C < 40:
-                fan.off()
+        if fan_ok:
+            if temp_unit == 'C':
+                if CPU_temp_C > fan_temp:
+                    fan.on()
+                elif CPU_temp_C < fan_temp - temp_lower_set:
+                    fan.off()
+            elif temp_unit == 'F':
+                if CPU_temp_F > fan_temp:
+                    fan.on()
+                elif CPU_temp_F < fan_temp - temp_lower_set*1.8:
+                    fan.off()
+            else:
+                log('temp_unit error, use defalut value: 50\'C')
+                if CPU_temp_C > 50:
+                    fan.on()
+                elif CPU_temp_C < 40:
+                    fan.off()
 
         # ---- oled control ----
         if oled_ok and oled_stat == True:
-        # ---- get system status data ----
+            # ---- get system status data ----
             # CPU usage
             CPU_usage = float(get_cpu_usage())
             # clear draw buffer
@@ -399,44 +419,50 @@ def main():
                 oled_stat = False
 
         # ---- power key event ----
-        if power_key.is_pressed:
-            # screen on
-            if oled_ok and oled_stat == False:
-                oled.on()
-                oled_stat = True
-                time_start = time.time()
-            # power off
-            if power_key_flag == False:
-                power_key_flag = True
-                power_timer = time.time()
-            elif (time.time()-power_timer) > 2:
-                #
-                if oled_ok:
-                    oled.on()
-                    draw.rectangle((0,0,width,height), outline=0, fill=0)
-                    # draw_text('POWER OFF',36,24)
-                    left, top, right, bottom = font_12.getbbox('POWER OFF')
-                    text_width = right - left
-                    text_height = bottom - top
-                    text_x = int((width - text_width)/2-1)
-                    text_y = int((height - text_height)/2-1)
-                    draw.text((text_x, text_y), text='POWER OFF', font=font_12, fill=1)
-                    oled.image(image)
-                    oled.display()
-                #
-                power_key.wait_for_release()
-                log("POWER OFF")
-                #
-                if oled_ok:
-                    oled_stat = False
-                    oled.off()
-                if mode == HOME_ASSISTANT_ADDON:
-                    ha.shutdown() # shutdown homeassistant host
-                else:
-                    os.system('poweroff')
-                    sys.exit(1)
+        if power_key_ok != True:
+            screen_always_on = True
+            oled.on()
         else:
-            power_key_flag = False
+            if power_key.value == 0:
+                # screen on
+                if oled_ok and oled_stat == False:
+                    oled.on()
+                    oled_stat = True
+                    time_start = time.time()
+                # power off
+                if power_key_flag == False:
+                    power_key_flag = True
+                    power_timer = time.time()
+                elif (time.time()-power_timer) > 2:
+                    #
+                    if oled_ok:
+                        oled.on()
+                        draw.rectangle((0,0,width,height), outline=0, fill=0)
+                        # draw_text('POWER OFF',36,24)
+                        left, top, right, bottom = font_12.getbbox('POWER OFF')
+                        text_width = right - left
+                        text_height = bottom - top
+                        text_x = int((width - text_width)/2-1)
+                        text_y = int((height - text_height)/2-1)
+                        draw.text((text_x, text_y), text='POWER OFF', font=font_12, fill=1)
+                        oled.image(image)
+                        oled.display()
+                    #
+                    while power_key.value == 0:
+                        pass
+                    log("POWER OFF")
+                    #
+                    if oled_ok:
+                        oled_stat = False
+                        oled.off()
+                    if mode == HOME_ASSISTANT_ADDON:
+                        ha.shutdown() # shutdown homeassistant host
+                    else:
+                        os.system('poweroff')
+                        sys.exit(1)
+            else:
+                power_key_flag = False
+
 
         time.sleep(update_frequency)
 
@@ -459,8 +485,7 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        log('error')
-        log(e)
+        log(f'error\n {e}')
     finally:
         exit_handler()
 
