@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.2.9] - 2024-7-23
+
+### Fixed
+
+- Fix bug of gpiozero Button not working on kernel 6.6.x
+
 ## [2.2.8] - 2024-3-27
 
 ### Added
