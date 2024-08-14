@@ -12,10 +12,12 @@
 
     👉 Ready to explore and create with us? Click [|link_sf_facebook|] and join today!
 
-Pironman V2.0- SunFounder Mini PC Kit for Raspberry Pi
+|link_Pironman_V2|- SunFounder Mini PC Kit for Raspberry Pi
 =================================================================
 
-Thanks for choosing our Pironman V2.0.
+* |link_Pironman_V2.0|
+
+Thanks for choosing our |link_Pironman_V2|.
 
 .. note::
     This document is available in the following languages.
