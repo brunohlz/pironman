@@ -88,6 +88,14 @@ gettext_compact = False # Support for generating the contents of the folders ins
 
 rst_epilog = """
 
+.. |link_Pironman_V2.0| raw:: html
+
+    <a href="https://www.sunfounder.com/products/raspberry-pi-4-case?_pos=2&_sid=31164a2fe&_ss=r" target="_blank">Kauflink für Pironman V2.0</a>
+
+.. |link_Pironman_V2| raw:: html
+
+    <a href="https://www.sunfounder.com/products/raspberry-pi-4-case?_pos=2&_sid=31164a2fe&_ss=r" target="_blank">Pironman V2.0</a>
+
 .. |link_sf_facebook| raw:: html
 
     <a href="https://bit.ly/raphaelkit" target="_blank">hier</a>
