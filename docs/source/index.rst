@@ -12,10 +12,12 @@
 
     👉 私たちと一緒に探索し、創造する準備はできていますか？[|link_sf_facebook|]をクリックして今すぐ参加しましょう！
 
-Pironman V2.0- SunFounder向けのRaspberry PiミニPCキット
+|link_Pironman_V2|- SunFounder向けのRaspberry PiミニPCキット
 =================================================================
 
-SunFounder Pironman V2.0をお選びいただき、ありがとうございます。
+* |link_Pironman_V2.0|
+
+SunFounder |link_Pironman_V2|をお選びいただき、ありがとうございます。
 
 .. note::
     このドキュメントは以下の言語で利用可能です。
