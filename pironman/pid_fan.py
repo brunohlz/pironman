@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import time
 
 
-FAN_PWM = 14
+FAN_PWM = 6
 LED_PWM = 17
 fan_pwn_freq = 100
 led_pwn_freq = 1
