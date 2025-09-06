@@ -52,7 +52,7 @@ if status == 0:
 # region: config
 power_key_pin = 16
 fan_pin = 6
-rgb_pin = 10
+rgb_pin = 18
 update_frequency = 0.5  # second
 
 temp_unit = 'C' # 'C' or 'F'
@@ -200,7 +200,7 @@ def fan_off():
 
 # region: rgb_strip init
 try:
-    strip = WS2812(LED_COUNT=16, LED_PIN=rgb_pin, LED_FREQ_HZ=rgb_pwm_freq*1000)
+    strip = WS2812(LED_COUNT=4, LED_PIN=rgb_pin, LED_FREQ_HZ=rgb_pwm_freq*1000)
 except Exception as e:
     log('rgb_strip init failed:\n%s'%e)
     rgb_switch = False

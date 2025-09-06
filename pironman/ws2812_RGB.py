@@ -5,7 +5,7 @@ from utils import log
 
 # LED strip configuration:
 # LED_COUNT      = 16      # Number of LED pixels.
-# LED_PIN        = 12      # GPIO pin connected to the pixels (must support PWM!).
+# LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 # LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 # LED_DMA        = 10      # DMA channel to use for generating signal (try 5)
 # LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
@@ -45,7 +45,7 @@ class WS2812():
         LED_BRIGHTNESS=255,
         LED_FREQ_HZ=1000000,
         LED_DMA=10,
-        LED_INVERT=False,
+        LED_INVERT=True,
     ):
         self.led_count = LED_COUNT
         self.led_pin = LED_PIN
@@ -229,7 +229,7 @@ class WS2812():
 
 if __name__ == "__main__":
     speed = 80
-    strip = WS2812(16, 10)  # LED_COUNT, LED_PIN
+    strip = WS2812(4, 18)  # LED_COUNT, LED_PIN
 
     # strip.display('breath','#0000ff', speed=speed)
     # strip.display(style='leap',color='#0000ff', speed=speed)

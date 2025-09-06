@@ -45,8 +45,8 @@
 ####
 ####   -pwm,--rgb_pwm       [frequency], rgb signal frequency (400 ~ 1600, default 1000 kHz)
 ####
-####   -rp,--rgb_pin        [pin], rgb signal pin, could be [10 / spi/ SPI / 12 / pwm/ PWM] or
-####                        [21 / pcm / PCM], default 10
+####   -rp,--rgb_pin        [pin], rgb signal pin, could be [10 / spi/ SPI / 18 / pwm/ PWM] or
+####                        [21 / pcm / PCM], default 18
 ####
 ####   -F,--foreground      run in foreground
 ####
@@ -382,10 +382,10 @@ while [[ $# -gt 0 ]]; do
           fi
           shift 2
           ;;
-        pwm|PWM|12)
-          echo "set rgb io to pin 12 (pwm)"
+        pwm|PWM|18)
+          echo "set rgb io to pin 18 (pwm)"
           # set io
-          change_config ".*rgb_pin\s*=.*"  "rgb_pin = 12" ${CONF}
+          change_config ".*rgb_pin\s*=.*"  "rgb_pin = 18" ${CONF}
           #
           if [[ $boot_config != "" ]]; then
             echo "boot_config: ${boot_config}"
@@ -416,7 +416,7 @@ while [[ $# -gt 0 ]]; do
           shift 2
           ;;
         *)
-          echo "usage: pironman -rp|--rgb_pin [10 / spi / 12 / pwm / 21 / pcm]"
+          echo "usage: pironman -rp|--rgb_pin [10 / spi / 18 / pwm / 21 / pcm]"
           exit 1
           ;;
       esac
